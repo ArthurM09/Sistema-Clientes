@@ -1,53 +1,116 @@
-<h1>Criar Projeto</h1>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<form action="{{ route('projetos.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <label for="client_id">Cliente:</label>
-    <select name="client_id" id="client_id" required>
-        @foreach ($clientes as $cliente)
-            <option value="{{ $cliente->id }}">{{ $cliente->id }}</option>
-        @endforeach
-    </select><br>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Outros campos do formulário -->
-    <label for="name">Nome:</label>
-    <input type="text" name="name" id="name" required><br>
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="font-sans antialiased">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+        <div>
+            <a href="/">
+                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            </a>
+        </div>
 
-    <label for="description">Descrição:</label>
-    <textarea name="description" id="description"></textarea><br>
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            <h1 class="text-2xl font-bold text-center mb-4 text-gray-400">Novo Projeto</h1>
 
-    <label for="icone">Ícone:</label>
-    <input type="file" name="icone" id="icone" required><br>
+            <form method="POST" action="{{ route('projetos.store') }}" enctype="multipart/form-data">
+                @csrf
 
-    <label for="initial_date">Data Inicial:</label>
-    <input type="date" name="initial_date" id="initial_date" required><br>
+                <div>
+                    <x-input-label for="client_id" :value="__('Cliente')" />
+                    <select name="client_id" id="client_id" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                        @foreach ($clientes as $cliente)
+                            <option value="{{ $cliente->id }}">{{ $cliente->id }}</option>
+                        @endforeach
+                    </select>
+                    <x-input-error :messages="$errors->get('client_id')" class="mt-2" />
+                </div>
 
-    <label for="end_date">Data Final:</label>
-    <input type="date" name="end_date" id="end_date"><br>
+                <div class="mt-4">
+                    <x-input-label for="name" :value="__('Nome')" />
+                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                </div>
 
-    <label for="status">Status:</label>
-    <select name="status" id="status" required>
-        <option value="pending">Pending</option>
-        <option value="doing">Doing</option>
-        <option value="done">Done</option>
-        <option value="canceled">Canceled</option>
-    </select><br>
+                <div class="mt-4">
+                    <x-input-label for="description" :value="__('Descrição')" />
+                    <textarea id="description" name="description" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">{{ old('description') }}</textarea>
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                </div>
 
-    <label for="percent">Percentual:</label>
-    <input type="number" name="percent" id="percent" min="0" max="100" required><br>
+                <div class="mt-4">
+                    <x-input-label for="icone" :value="__('Ícone')" />
+                    <input type="file" id="icone" name="icone" class="block mt-1 w-full" required>
+                    <x-input-error :messages="$errors->get('icone')" class="mt-2" />
+                </div>
 
-    <label for="whatsapp">Whatsapp:</label>
-    <input type="text" name="whatsapp" id="whatsapp"><br>
+                <div class="mt-4">
+                    <x-input-label for="initial_date" :value="__('Data Inicial')" />
+                    <x-text-input id="initial_date" class="block mt-1 w-full" type="date" name="initial_date" :value="old('initial_date')" required />
+                    <x-input-error :messages="$errors->get('initial_date')" class="mt-2" />
+                </div>
 
-    <label for="resp_nome">Nome do Responsável:</label>
-    <input type="text" name="resp_nome" id="resp_nome" required><br>
+                <div class="mt-4">
+                    <x-input-label for="end_date" :value="__('Data Final')" />
+                    <x-text-input id="end_date" class="block mt-1 w-full" type="date" name="end_date" :value="old('end_date')" />
+                    <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
+                </div>
 
-    <label for="resp_email">Email do Responsável:</label>
-    <input type="email" name="resp_email" id="resp_email" required><br>
+                <div class="mt-4">
+                    <x-input-label for="status" :value="__('Status')" />
+                    <select name="status" id="status" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                        <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="doing" {{ old('status') == 'doing' ? 'selected' : '' }}>Doing</option>
+                        <option value="done" {{ old('status') == 'done' ? 'selected' : '' }}>Done</option>
+                        <option value="canceled" {{ old('status') == 'canceled' ? 'selected' : '' }}>Canceled</option>
+                    </select>
+                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                </div>
 
-    <label for="resp_telefone">Telefone do Responsável:</label>
-    <input type="text" name="resp_telefone" id="resp_telefone"><br>
 
-    <button type="submit">Salvar</button>
-</form>
+                <div class="mt-4">
+                    <x-input-label for="percent" :value="__('Percentual')" />
+                    <x-text-input id="percent" class="block mt-1 w-full" type="number" name="percent" :value="old('percent')" min="0" max="100" required />
+                    <x-input-error :messages="$errors->get('percent')" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="resp_nome" :value="__('Nome do Responsável')" />
+                    <x-text-input id="resp_nome" class="block mt-1 w-full" type="text" name="resp_nome" :value="old('resp_nome')" required />
+                    <x-input-error :messages="$errors->get('resp_nome')" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="resp_email" :value="__('Email do Responsável')" />
+                    <x-text-input id="resp_email" class="block mt-1 w-full" type="email" name="resp_email" :value="old('resp_email')" required />
+                    <x-input-error :messages="$errors->get('resp_email')" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="resp_telefone" :value="__('Telefone do Responsável')" />
+                    <x-text-input id="resp_telefone" class="block mt-1 mb-6 w-full" type="text" name="resp_telefone" :value="old('resp_telefone')" />
+                    <x-input-error :messages="$errors->get('resp_telefone')" class="mt-2" />
+                </div>
+
+                <div class="flex items-center justify-center mt-4">
+                    <x-primary-button class="ml-4">
+                        {{ __('Cadastrar') }}
+                    </x-primary-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

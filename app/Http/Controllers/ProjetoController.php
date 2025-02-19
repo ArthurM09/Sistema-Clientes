@@ -10,12 +10,6 @@ use Illuminate\Support\Facades\Storage; // Para lidar com o upload de imagens
 
 class ProjetoController extends Controller
 {
-    public function index()
-    {
-        $projetos = Projeto::with('cliente')->get(); // Eager loading para melhorar o desempenho
-        return view('projetos.index', compact('projetos'));
-    }
-
     public function create()
     {
         $clientes = Cliente::all(); // Para o dropdown na view de criação
@@ -33,7 +27,6 @@ class ProjetoController extends Controller
             'end_date' => 'nullable|date',
             'status' => 'required|in:pending,doing,done,canceled',
             'percent' => 'required|integer|min:0|max:100',
-            'whatsapp' => 'nullable',
             'resp_nome' => 'required',
             'resp_email' => 'required|email',
             'resp_telefone' => 'nullable',
@@ -55,21 +48,20 @@ class ProjetoController extends Controller
             'end_date' => $request->end_date,
             'status' => $request->status,
             'percent' => $request->percent,
-            'whatsapp' => $request->whatsapp,
             'resp_nome' => $request->resp_nome,
             'resp_email' => $request->resp_email,
             'resp_telefone' => $request->resp_telefone,
         ]);
 
-        return redirect()->route('projetos.index');
+        return redirect()->route('dashboard'); // Redireciona para o dashboard
     }
 
-    public function show(string $id)
+    public function show(Projeto $projeto)
     {
         return view('projetos.show', compact('projeto'));
     }
 
-    public function edit(string $id)
+    public function edit(Projeto $projeto)
     {
         $clientes = Cliente::all(); // Para o dropdown na view de edição
         return view('projetos.edit', compact('projeto', 'clientes'));
@@ -86,7 +78,6 @@ class ProjetoController extends Controller
             'end_date' => 'nullable|date',
             'status' => 'required|in:pending,doing,done,canceled',
             'percent' => 'required|integer|min:0|max:100',
-            'whatsapp' => 'nullable',
             'resp_nome' => 'required',
             'resp_email' => 'required|email',
             'resp_telefone' => 'nullable',
@@ -103,7 +94,7 @@ class ProjetoController extends Controller
 
         $projeto->update($request->except('icone')); // Atualiza os outros campos
 
-        return redirect()->route('projetos.index');
+        return redirect()->route('dashboard'); // Redireciona para o dashboard
     }
 
     public function destroy(Projeto $projeto)
@@ -112,6 +103,6 @@ class ProjetoController extends Controller
             Storage::disk('public')->delete($projeto->icone);
         }
         $projeto->delete();
-        return redirect()->route('projetos.index');
+        return redirect()->route('dashboard'); // Redireciona para o dashboard
     }
 }

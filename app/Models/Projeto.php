@@ -10,7 +10,7 @@ class Projeto extends Model
     use HasFactory;
 
     protected $fillable = [
-        'client_id', 'name', 'description', 'icone', 'slug', 'initial_date', 'end_date', 'status', 'percent', 'whatsapp', 'resp_nome', 'resp_email', 'resp_telefone'
+        'client_id', 'name', 'description', 'icone', 'slug', 'initial_date', 'end_date', 'status', 'percent', 'resp_nome', 'resp_email', 'resp_telefone'
     ];
 
     public function cliente()
