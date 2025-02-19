@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\DashboardController; // Importe o DashboardController
+use App\Http\Controllers\ProjetoController;
+use App\Http\Controllers\DashboardController; 
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,6 @@ Route::redirect('/', '/login');
 // Rota para o dashboard usando o DashboardController
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -24,5 +24,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('clientes', ClienteController::class);
+
+Route::resource('projetos', ProjetoController::class);
 
 require __DIR__.'/auth.php';
