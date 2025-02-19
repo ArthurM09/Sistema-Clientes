@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Storage; // Para lidar com o upload de imagens
 
 class ProjetoController extends Controller
 {
+    public function index()
+    {
+        $projetos = Projeto::with('cliente')->get();
+        return view('projetos.index', compact('projetos'));
+    }
+
     public function create()
     {
         $clientes = Cliente::all(); // Para o dropdown na view de criação

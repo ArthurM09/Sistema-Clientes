@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
+    public function index()
+    {
+        $clientes = Cliente::all(['id', 'nome', 'cnpj_cpf', 'contato']);
+        return view('clientes.index', compact('clientes'));
+    }
+    
     public function create()
     {
         return view('clientes.create');
