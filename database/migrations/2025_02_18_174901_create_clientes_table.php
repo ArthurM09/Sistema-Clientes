@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('endereco_cidade');
             $table->string('endereco_estado');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

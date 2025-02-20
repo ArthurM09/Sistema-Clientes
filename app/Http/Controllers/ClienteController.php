@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
+    public function index()
+    {
+        $clientes = Cliente::withoutTrashed()->get();
+        return view('clientes.index', compact('clientes'));
+    }
+    
     public function create()
     {
         return view('clientes.create');
@@ -37,9 +43,9 @@ class ClienteController extends Controller
         return redirect()->route('dashboard'); // Redireciona para o dashboard
     }
 
-    public function destroy($id)
+    public function destroy(Cliente $cliente)
     {
-        Cliente::destroy($id);
+        $cliente->delete();
         return redirect()->route('dashboard'); // Redireciona para o dashboard
     }
 }

@@ -19,11 +19,11 @@ return new class extends Migration
             $table->date('end_date')->nullable(); // Pode ser nulo se a data final não for definida
             $table->enum('status', ['pending', 'doing', 'done', 'canceled'])->default('pending');
             $table->integer('percent')->default(0);
-            $table->string('whatsapp')->nullable();
             $table->string('resp_nome');
             $table->string('resp_email');
             $table->string('resp_telefone')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('client_id')->references('id')->on('clientes')->onDelete('cascade');
         });
