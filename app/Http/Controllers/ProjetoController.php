@@ -12,13 +12,13 @@ class ProjetoController extends Controller
 {
     public function index()
     {
-        $projetos = Projeto::with('cliente')->get();
+        $projetos = Projeto::with('cliente')->withoutTrashed()->get();
         return view('projetos.index', compact('projetos'));
     }
 
     public function create()
     {
-        $clientes = Cliente::all(); // Para o dropdown na view de criação
+        $clientes = Cliente::all(); 
         return view('projetos.create', compact('clientes'));
     }
 

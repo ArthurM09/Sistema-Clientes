@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('resp_email');
             $table->string('resp_telefone')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('client_id')->references('id')->on('clientes')->onDelete('cascade');
         });

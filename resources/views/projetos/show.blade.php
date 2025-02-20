@@ -1,93 +1,90 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Visualizar Projeto') }}
+        </h2>
+    </x-slot>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="border-b border-gray-200 dark:border-gray-700 pb-5">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">Informações do Projeto</h3>
+                    </div>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+                    <dl class="mt-5 grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Nome:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->name }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Cliente:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->cliente->nome }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Descrição:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->description }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Ícone:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                                @if ($projeto->icone)
+                                    <img src="{{ Storage::url($projeto->icone) }}" alt="{{ $projeto->name }} Ícone" class="w-20 h-20 rounded-full">
+                                @else
+                                    Sem ícone
+                                @endif
+                            </dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Slug:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->slug }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Data Inicial:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->initial_date }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Data Final:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->end_date }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Status:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->status }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Percentual:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->percent }}%</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Whatsapp:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->whatsapp }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Nome do Responsável:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->resp_nome }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Email do Responsável:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->resp_email }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Telefone do Responsável:</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $projeto->resp_telefone }}</dd>
+                        </div>
+                    </dl>
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="font-sans antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-        <div>
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </div>
+                    <div class="mt-6 flex justify-end">
+                        <a href="{{ route('projetos.edit', $projeto->id) }}" class="inline-flex items-center px-4 py-2" style="background-color: #22c55e !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: white; transition: all 0.15s ease-in-out;" onmouseover="this.style.backgroundColor='#16a34a'" onmouseout="this.style.backgroundColor='#22c55e'">Editar</a>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-            <h1 class="text-2xl font-bold text-center mb-4">{{ $projeto->name }}</h1>
-
-            <div>
-                <x-input-label :value="__('Cliente')" />
-                <p>{{ $projeto->cliente->nome }}</p>
-            </div>
-
-            <div class="mt-4">
-                <x-input-label :value="__('Descrição')" />
-                <p>{{ $projeto->description }}</p>
-            </div>
-
-            <div class="mt-4">
-                <x-input-label :value="__('Ícone')" />
-                @if ($projeto->icone)
-                    <img src="{{ Storage::url($projeto->icone) }}" alt="{{ $projeto->name }} Ícone" width="100" class="mb-2">
-                @endif
-            </div>
-
-            <div class="mt-4">
-                <x-input-label :value="__('Data Inicial')" />
-                <p>{{ $projeto->initial_date }}</p>
-            </div>
-
-            <div class="mt-4">
-                <x-input-label :value="__('Data Final')" />
-                <p>{{ $projeto->end_date }}</p>
-            </div>
-
-            <div class="mt-4">
-                <x-input-label :value="__('Status')" />
-                <p>{{ $projeto->status }}</p>
-            </div>
-
-            <!-- ... (outros campos) ... -->
-            <div class="mt-4">
-                <x-input-label :value="__('Percentual')" />
-                <p>{{ $projeto->percent }}</p>
-            </div>
-            
-            <div class="mt-4">
-                <x-input-label :value="__('Nome do Responsável')" />
-                <p>{{ $projeto->resp_nome }}</p>
-            </div>
-
-            <div class="mt-4">
-                <x-input-label :value="__('Email do Responsável')" />
-                <p>{{ $projeto->resp_email }}</p>
-            </div>
-
-            <div class="mt-4">
-                <x-input-label :value="__('Telefone do Responsável')" />
-                <p>{{ $projeto->resp_telefone }}</p>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a href="{{ route('projetos.edit', $projeto) }}" class="btn btn-primary">Editar</a>
-                <form action="{{ route('projetos.destroy', $projeto) }}" method="POST" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Excluir</button>
-                </form>
-
+                        <form action="{{ route('projetos.destroy', $projeto) }}" method="POST" class="inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="inline-flex items-center px-4 py-2" style="background-color: #ef4444 !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: white; transition: all 0.15s ease-in-out;" onmouseover="this.style.backgroundColor='#dc2626'" onmouseout="this.style.backgroundColor='#ef4444'" onclick="return confirm('Tem certeza que deseja excluir este projeto?')">Excluir</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+</x-app-layout>

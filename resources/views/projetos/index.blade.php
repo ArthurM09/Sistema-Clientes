@@ -44,7 +44,7 @@
                                             {{ $projeto->id }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
-                                            {{ $projeto->cliente->id }}
+                                            {{ $projeto->cliente ? $projeto->cliente->id : '--------' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                                             {{ $projeto->name }}
@@ -56,6 +56,8 @@
                                             {{ $projeto->resp_nome }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <a href="{{ route('projetos.show', $projeto->id) }}" class="inline-flex items-center px-4 py-2 mr-2" style="background-color: #0ea5e9 !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: white; transition: all 0.15s ease-in-out;" onmouseover="this.style.backgroundColor='#0284c7'" onmouseout="this.style.backgroundColor='#0ea5e9'">Visualizar</a>
+
                                             <a href="{{ route('projetos.edit', $projeto->id) }}" class="inline-flex items-center px-4 py-2" style="background-color: #22c55e !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: white; transition: all 0.15s ease-in-out;" onmouseover="this.style.backgroundColor='#16a34a'" onmouseout="this.style.backgroundColor='#22c55e'">Editar</a>
                                             <form action="{{ route('projetos.destroy', $projeto->id) }}" method="POST" style="display: inline-block;">
                                                 @csrf
