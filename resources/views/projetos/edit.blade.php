@@ -23,7 +23,7 @@
         </div>
 
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-            <h1 class="text-2xl font-bold text-center mb-4">Editar Projeto</h1>
+            <h1 class="text-2xl font-bold text-center mb-4 text-gray-400">Editar Projeto</h1>
 
             <form method="POST" action="{{ route('projetos.update', $projeto) }}" enctype="multipart/form-data">
                 @csrf
@@ -103,12 +103,12 @@
 
                 <div class="mt-4">
                     <x-input-label for="resp_telefone" :value="__('Telefone do Responsável')" />
-                    <x-text-input id="resp_telefone" class="block mt-1 w-full" type="text" name="resp_telefone" :value="old('resp_telefone', $projeto->resp_telefone)" />
+                    <x-text-input id="resp_telefone" class="block mt-1 w-full mb-6" type="text" name="resp_telefone" :value="old('resp_telefone', $projeto->resp_telefone)" />
                     <x-input-error :messages="$errors->get('resp_telefone')" class="mt-2" />
                 </div>
 
 
-                <div class="flex items-center justify-end mt-4">
+                <div class="flex items-center justify-center mt-4">
                     <x-primary-button class="ml-4">
                         {{ __('Atualizar') }}
                     </x-primary-button>

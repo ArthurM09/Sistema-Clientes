@@ -77,7 +77,7 @@
                     <div class="mt-6 flex justify-end">
                         <a href="{{ route('projetos.edit', $projeto->id) }}" class="inline-flex items-center px-4 py-2" style="background-color: #22c55e !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: white; transition: all 0.15s ease-in-out;" onmouseover="this.style.backgroundColor='#16a34a'" onmouseout="this.style.backgroundColor='#22c55e'">Editar</a>
 
-                        <form action="{{ route('projetos.destroy', $projeto) }}" method="POST" class="inline-block">
+                        <form action="{{ route('projetos.destroy', $projeto) }}" method="POST" class="inline-block" style="margin-left: 10px;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="inline-flex items-center px-4 py-2" style="background-color: #ef4444 !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: white; transition: all 0.15s ease-in-out;" onmouseover="this.style.backgroundColor='#dc2626'" onmouseout="this.style.backgroundColor='#ef4444'" onclick="return confirm('Tem certeza que deseja excluir este projeto?')">Excluir</button>

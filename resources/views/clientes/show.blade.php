@@ -60,14 +60,14 @@
                         </div>
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Estado:</dt>
-                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $cliente->endereco_estado }}</dd>
+                            <dd class "mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $cliente->endereco_estado }}</dd>
                         </div>
                     </dl>
 
                     <div class="mt-6 flex justify-end">
-                        <a href="{{ route('clientes.edit', $cliente->id) }}" class="inline-flex items-center px-4 py-2" style="background-color: #22c55e !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: white; transition: all 0.15s ease-in-out;" onmouseover="this.style.backgroundColor='#16a34a'" onmouseout="this.style.backgroundColor='#22c55e'">Editar</a>
+                        <a href="{{ route('clientes.edit', $cliente->id) }}" class="inline-flex items-center px-4 py-2" style="background-color: #22c55e !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: white; transition: all 0.15s ease-in-out" onmouseover="this.style.backgroundColor='#16a34a'" onmouseout="this.style.backgroundColor='#22c55e'">Editar</a>
 
-                        <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" class="inline-block">
+                        <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" class="inline-block" style="margin-left: 10px;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="inline-flex items-center px-4 py-2" style="background-color: #ef4444 !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: white; transition: all 0.15s ease-in-out;" onmouseover="this.style.backgroundColor='#dc2626'" onmouseout="this.style.backgroundColor='#ef4444'" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</button>
