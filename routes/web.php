@@ -12,7 +12,11 @@ Route::get('/', function () {
 });
 */
 
-Route::redirect('/', '/login');
+//Route::redirect('/', '/login');
+
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Rota para o dashboard usando o DashboardController
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
