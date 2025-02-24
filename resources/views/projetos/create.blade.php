@@ -13,6 +13,31 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="number"],
+        input[type="file"],
+        textarea,
+        select {
+            background-color: #111827;
+            color: white;
+            border: 1px solid #374151;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+        }
+
+        select option[value=""] {
+            color: gray;
+        }
+
+        select option:checked {
+            background-color: #374151;
+            color: white;
+        }
+    </style>
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
@@ -30,9 +55,10 @@
 
                 <div>
                     <x-input-label for="client_id" :value="__('Cliente')" />
-                    <select name="client_id" id="client_id" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    <select name="client_id" id="client_id" class="block mt-1 w-full" required>
+                        <option value="">Selecione um cliente</option>
                         @foreach ($clientes as $cliente)
-                            <option value="{{ $cliente->id }}">{{ $cliente->id }}</option>
+                            <option value="{{ $cliente->id }}" {{ old('client_id') == $cliente->id ? 'selected' : '' }}>{{ $cliente->id }}</option>
                         @endforeach
                     </select>
                     <x-input-error :messages="$errors->get('client_id')" class="mt-2" />
@@ -46,44 +72,47 @@
 
                 <div class="mt-4">
                     <x-input-label for="description" :value="__('Descrição')" />
-                    <textarea id="description" name="description" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">{{ old('description') }}</textarea>
+                    <textarea id="description" name="description" class="block mt-1 w-full">{{ old('description') }}</textarea>
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 
                 <div class="mt-4">
                     <x-input-label for="icone" :value="__('Ícone')" />
-                    <input type="file" id="icone" name="icone" class="block mt-1 w-full" required>
+                    <input type="file" id="icone" name="icone" class="block mt-1 w-full" accept="image/jpeg, image/png, image/gif, image/svg+xml" required>
                     <x-input-error :messages="$errors->get('icone')" class="mt-2" />
+                    <p class="text-sm text-gray-500 mt-1">Tipos de arquivo permitidos: JPEG, PNG, GIF, SVG.</p>
                 </div>
 
-                <div class="mt-4">
-                    <x-input-label for="initial_date" :value="__('Data Inicial')" />
-                    <x-text-input id="initial_date" class="block mt-1 w-full" type="date" name="initial_date" :value="old('initial_date')" required />
-                    <x-input-error :messages="$errors->get('initial_date')" class="mt-2" />
+                <div class="mt-4 flex justify-between space-x-4">
+                    <div class="w-1/2">
+                        <x-input-label for="initial_date" :value="__('Data Inicial')" />
+                        <x-text-input id="initial_date" class="block mt-1 w-full" type="date" name="initial_date" :value="old('initial_date')" required />
+                        <x-input-error :messages="$errors->get('initial_date')" class="mt-2" />
+                    </div>
+                    <div class="w-1/2">
+                        <x-input-label for="end_date" :value="__('Data Final')" />
+                        <x-text-input id="end_date" class="block mt-1 w-full" type="date" name="end_date" :value="old('end_date')" />
+                        <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
+                    </div>
                 </div>
 
-                <div class="mt-4">
-                    <x-input-label for="end_date" :value="__('Data Final')" />
-                    <x-text-input id="end_date" class="block mt-1 w-full" type="date" name="end_date" :value="old('end_date')" />
-                    <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
-                </div>
-
-                <div class="mt-4">
-                    <x-input-label for="status" :value="__('Status')" />
-                    <select name="status" id="status" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                        <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="doing" {{ old('status') == 'doing' ? 'selected' : '' }}>Doing</option>
-                        <option value="done" {{ old('status') == 'done' ? 'selected' : '' }}>Done</option>
-                        <option value="canceled" {{ old('status') == 'canceled' ? 'selected' : '' }}>Canceled</option>
-                    </select>
-                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
-                </div>
-
-
-                <div class="mt-4">
-                    <x-input-label for="percent" :value="__('Percentual')" />
-                    <x-text-input id="percent" class="block mt-1 w-full" type="number" name="percent" :value="old('percent')" min="0" max="100" required />
-                    <x-input-error :messages="$errors->get('percent')" class="mt-2" />
+                <div class="mt-4 flex justify-between w-full">
+                    <div>
+                        <x-input-label for="status" :value="__('Status')" />
+                        <select name="status" id="status" class="block mt-1 w-full" required>
+                            <option value="">Selecione o status</option>
+                            <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="doing" {{ old('status') == 'doing' ? 'selected' : '' }}>Doing</option>
+                            <option value="done" {{ old('status') == 'done' ? 'selected' : '' }}>Done</option>
+                            <option value="canceled" {{ old('status') == 'canceled' ? 'selected' : '' }}>Canceled</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="percent" :value="__('Percentual')" />
+                        <x-text-input id="percent" class="block mt-1 w-full" type="number" name="percent" :value="old('percent')" min="0" max="100" required />
+                        <x-input-error :messages="$errors->get('percent')" class="mt-2" />
+                    </div>
                 </div>
 
                 <div class="mt-4">
@@ -103,6 +132,7 @@
                     <x-text-input id="resp_telefone" class="block mt-1 mb-6 w-full" type="text" name="resp_telefone" :value="old('resp_telefone')" />
                     <x-input-error :messages="$errors->get('resp_telefone')" class="mt-2" />
                 </div>
+
 
                 <div class="flex items-center justify-center mt-4">
                     <x-primary-button class="ml-4">

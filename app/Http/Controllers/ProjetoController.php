@@ -28,7 +28,7 @@ class ProjetoController extends Controller
             'client_id' => 'required|exists:clientes,id',
             'name' => 'required',
             'description' => 'nullable',
-            'icone' => 'required|image',
+            'icone' => 'required|image', //Valida que o qrquivo é uma imagem
             'initial_date' => 'required|date',
             'end_date' => 'nullable|date',
             'status' => 'required|in:pending,doing,done,canceled',
