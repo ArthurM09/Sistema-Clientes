@@ -74,7 +74,7 @@
                             <label class="text-sm font-medium text-gray-500 dark:text-gray-400">Ícone</label>
                             <div class="prose dark:prose-invert max-w-none">
                                 @if ($projeto->icone)
-                                    <img src="{{ Storage::url($projeto->icone) }}" alt="{{ $projeto->name }} Ícone" class="w-20 h-20 rounded-full">
+                                    <img src="{{ Storage::url($projeto->icone) }}" alt="{{ $projeto->name }} Ícone" width="400" height="400" class="mb-2">
                                 @else
                                     Sem ícone
                                 @endif

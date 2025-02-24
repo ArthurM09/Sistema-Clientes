@@ -69,7 +69,7 @@ class ProjetoController extends Controller
 
     public function edit(Projeto $projeto)
     {
-        $clientes = Cliente::all(); // Para o dropdown na view de edição
+        $clientes = Cliente::all(); 
         return view('projetos.edit', compact('projeto', 'clientes'));
     }
 
