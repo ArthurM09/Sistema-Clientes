@@ -44,12 +44,16 @@ class ProjetoController extends Controller
             $iconePath = null;
         }
 
+        $name = $request->input('name');
+        $slug = $this->generateInitialsSlug($name); // Chama a função para gerar o slug
+
+
         Projeto::create([
             'client_id' => $request->client_id,
             'name' => $request->name,
             'description' => $request->description,
             'icone' => $iconePath,
-            'slug' => Str::slug($request->name),
+            'slug' => $slug,
             'initial_date' => $request->initial_date,
             'end_date' => $request->end_date,
             'status' => $request->status,
@@ -98,6 +102,11 @@ class ProjetoController extends Controller
             $projeto->icone = $iconePath;
         }
 
+        // Verifica se o nome foi alterado
+        if ($request->has('name') && $request->input('name') !== $projeto->name) { 
+            $projeto->slug = $this->generateInitialsSlug($request->input('name'));
+        }
+
         $projeto->update($request->except('icone')); // Atualiza os outros campos
 
         return redirect()->route('dashboard'); // Redireciona para o dashboard
@@ -111,4 +120,16 @@ class ProjetoController extends Controller
         $projeto->delete();
         return redirect()->route('dashboard'); // Redireciona para o dashboard
     }
+
+    private function generateInitialsSlug($name)
+{
+    $words = explode(' ', $name); // Divide o nome em palavras
+    $initials = '';
+
+    foreach ($words as $word) {
+        $initials .= strtoupper($word[0]); // Pega a primeira letra de cada palavra e converte para maiúscula
+    }
+
+    return $initials;
+}
 }
