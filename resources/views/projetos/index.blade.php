@@ -12,6 +12,9 @@
                     <a href="{{ route('projetos.create') }}" class="inline-flex items-center px-4 py-2" style="background-color: #4f46e5 !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 20px; color: white; transition: all 0.15s ease-in-out;" onmouseover="this.style.backgroundColor='#3c36b9'" onmouseout="this.style.backgroundColor='#4f46e5'">
                         Novo Projeto
                     </a>
+                    <a href="{{ route('atendimentos.index') }}" class="inline-flex items-center px-4 py-2" style="background-color: #4f46e5 !important; border-color: transparent; border-radius: 0.375rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 20px; color: white; transition: all 0.15s ease-in-out;" onmouseover="this.style.backgroundColor='#3c36b9'" onmouseout="this.style.backgroundColor='#4f46e5'">
+                        Atendimentos
+                    </a>
 
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 mx-auto">

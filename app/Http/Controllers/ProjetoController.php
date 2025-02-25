@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Projeto;
 use App\Models\Cliente; 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str; // Para gerar o slug
-use Illuminate\Support\Facades\Storage; // Para lidar com o upload de imagens
+use Illuminate\Support\Str; 
+use Illuminate\Support\Facades\Storage; 
 
 class ProjetoController extends Controller
 {
@@ -28,7 +28,7 @@ class ProjetoController extends Controller
             'client_id' => 'required|exists:clientes,id',
             'name' => 'required',
             'description' => 'nullable',
-            'icone' => 'required|image', //Valida que o qrquivo é uma imagem
+            'icone' => 'required|image', //Valida que o arquivo é uma imagem
             'initial_date' => 'required|date',
             'end_date' => 'nullable|date',
             'status' => 'required|in:pending,doing,done,canceled',
@@ -122,14 +122,14 @@ class ProjetoController extends Controller
     }
 
     private function generateInitialsSlug($name)
-{
-    $words = explode(' ', $name); // Divide o nome em palavras
-    $initials = '';
+    {
+        $words = explode(' ', $name); // Divide o nome em palavras
+        $initials = '';
 
-    foreach ($words as $word) {
-        $initials .= strtoupper($word[0]); // Pega a primeira letra de cada palavra e converte para maiúscula
+        foreach ($words as $word) {
+            $initials .= strtoupper($word[0]); // Pega a primeira letra de cada palavra e converte para maiúscula
+        }
+
+        return $initials;
     }
-
-    return $initials;
-}
 }
