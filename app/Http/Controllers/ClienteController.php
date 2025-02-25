@@ -22,7 +22,7 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         Cliente::create($request->all());
-        return redirect()->route('dashboard'); // Redireciona para o dashboard
+        return redirect()->route('clientes.index');
     }
 
     public function show(Cliente $cliente)
@@ -40,12 +40,12 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::findOrFail($id);
         $cliente->update($request->all());
-        return redirect()->route('dashboard'); // Redireciona para o dashboard
+        return redirect()->route('clientes.index');
     }
 
     public function destroy(Cliente $cliente)
     {
         $cliente->delete();
-        return redirect()->route('dashboard'); // Redireciona para o dashboard
+        return redirect()->route('clientes.index');
     }
 }

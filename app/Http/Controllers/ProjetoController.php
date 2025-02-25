@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Projeto;
 use App\Models\Cliente; 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str; 
 use Illuminate\Support\Facades\Storage; 
 
 class ProjetoController extends Controller
@@ -63,7 +62,7 @@ class ProjetoController extends Controller
             'resp_telefone' => $request->resp_telefone,
         ]);
 
-        return redirect()->route('dashboard'); // Redireciona para o dashboard
+        return redirect()->route('projetos.index');
     }
 
     public function show(Projeto $projeto)
@@ -109,7 +108,7 @@ class ProjetoController extends Controller
 
         $projeto->update($request->except('icone')); // Atualiza os outros campos
 
-        return redirect()->route('dashboard'); // Redireciona para o dashboard
+        return redirect()->route('projetos.index');
     }
 
     public function destroy(Projeto $projeto)
@@ -118,7 +117,7 @@ class ProjetoController extends Controller
             Storage::disk('public')->delete($projeto->icone);
         }
         $projeto->delete();
-        return redirect()->route('dashboard'); // Redireciona para o dashboard
+        return redirect()->route('projetos.index');
     }
 
     private function generateInitialsSlug($name)

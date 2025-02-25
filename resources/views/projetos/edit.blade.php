@@ -129,7 +129,7 @@
                     <x-input-error :messages="$errors->get('resp_email')" class="mt-2" />
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-4 mb-6">
                     <x-input-label for="resp_telefone" :value="__('Telefone do Responsável')" />
                     <x-text-input id="resp_telefone" class="block mt-1 w-full" type="text" name="resp_telefone" :value="old('resp_telefone', $projeto->resp_telefone)" />
                     <x-input-error :messages="$errors->get('resp_telefone')" class="mt-2" />

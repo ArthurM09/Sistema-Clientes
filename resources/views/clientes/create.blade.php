@@ -22,7 +22,7 @@
             </a>
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg mb-10">
             <h1 class="text-2xl font-bold text-center mb-4 text-gray-400">Novo Cliente</h1>
 
             <form method="POST" action="{{ route('clientes.store') }}">

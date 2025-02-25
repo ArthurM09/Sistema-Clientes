@@ -22,17 +22,21 @@ class AtendimentoController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'project_id' => 'required|exists:projetos,id',
             'assunto' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'status' => 'required|in:pending,closed,canceled,finalized',
         ]);
 
-        Atendimento::create($validatedData);
+        Atendimento::create([
+            'project_id' => $request->project_id,
+            'assunto' => $request->assunto,
+            'descricao' => $request->descricao,
+            'status' => $request->status,
+        ]);
 
-        //return redirect()->route('atendimentos.index');
-        return redirect()->route('dashboard');
+        return redirect()->route('atendimentos.index');
     }
 
     public function show(Atendimento $atendimento)
@@ -48,23 +52,21 @@ class AtendimentoController extends Controller
 
     public function update(Request $request, Atendimento $atendimento)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'project_id' => 'required|exists:projetos,id',
             'assunto' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'status' => 'required|in:pending,closed,canceled,finalized',
         ]);
+        
+        $atendimento->update($request->all());
 
-        $atendimento->update($validatedData);
-
-        //return redirect()->route('atendimentos.index');
-        return redirect()->route('dashboard');
+        return redirect()->route('atendimentos.index');
     }
 
     public function destroy(Atendimento $atendimento)
     {
         $atendimento->delete();
-        //return redirect()->route('atendimentos.index');
-        return redirect()->route('dashboard');
+        return redirect()->route('atendimentos.index');
     }
 }
