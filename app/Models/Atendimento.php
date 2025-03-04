@@ -18,4 +18,9 @@ class Atendimento extends Model
     {
         return $this->belongsTo(Projeto::class, 'project_id');
     }
+
+    public function mensagens()
+    {
+        return $this->hasMany(Mensagem::class);
+    }
 }

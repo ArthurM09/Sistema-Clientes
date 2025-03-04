@@ -41,6 +41,7 @@ class AtendimentoController extends Controller
 
     public function show(Atendimento $atendimento)
     {
+        $atendimento = Atendimento::with('mensagens')->find($atendimento->id);
         return view('atendimentos.show', compact('atendimento'));
     }
 
